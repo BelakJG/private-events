@@ -3,7 +3,7 @@
 
 <% @events.each do |event| %>
     <div class="event-listing">
-        <h3><%= event.event_title %></h3>
+        <h3><%= link_to event.event_title, event %></h3>
         <p>Event happening on: <%= event.event_date %></p>
     </div>
 <% end %>

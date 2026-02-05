@@ -1,0 +1,5 @@
+<h1><%= @event.event_title %></h1>
+
+<p>Event happening on: <%= @event.event_date%></p>
+
+<p>Event created by: <%= link_to @event.creator.email, @event.creator %></p>
