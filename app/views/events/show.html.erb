@@ -3,3 +3,13 @@
 <p>Event happening on: <%= @event.event_date%></p>
 
 <p>Event created by: <%= link_to @event.creator.email, @event.creator %></p>
+
+<%= form_with url: enrollments_path do |form| %>
+    <%= form.hidden_field :event_id, value: @event.id %>
+    <%= form.submit "Attend Event"%>
+<% end %>
+
+<h3>People Attending:</h3>
+<% @event.attendees.each do |attendee| %>
+    <p><%= link_to attendee.email, attendee %></p>
+<% end %>

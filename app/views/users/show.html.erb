@@ -5,3 +5,17 @@
         <h3><%= event.event_title %></h3>
     </div>
 <% end %>
+
+<h3>Past Events:</h3>
+<% @user.attended_events.each do |event| %>
+    <% if event.event_date < Date.current %>
+        <p><%= link_to event.event_title, event %></p>
+    <% end %>
+<% end %>
+
+<h3>Future Events:</h3>
+<% @user.attended_events.each do |event| %>
+    <% if event.event_date >= Date.current %>
+        <p><%= link_to event.event_title, event %></p>
+    <% end %>
+<% end %>
