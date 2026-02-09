@@ -19,4 +19,11 @@ class EnrollmentsController < ApplicationController
       redirect_to event
     end
   end
+
+  def destroy
+    @enrollment = Enrollment.find(params[:id])
+    @enrollment.destroy
+
+    redirect_to current_user, notice: "No longer attending event"
+  end
 end

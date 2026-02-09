@@ -2,20 +2,20 @@
 
 <% @user.events.each do |event| %>
     <div class="user_event">
-        <h3><%= event.event_title %></h3>
+        <h3><%= link_to event.event_title, event %></h3>
     </div>
 <% end %>
 
 <h3>Past Events:</h3>
-<% @user.attended_events.each do |event| %>
-    <% if event.event_date < Date.current %>
-        <p><%= link_to event.event_title, event %></p>
-    <% end %>
+<% @user.attended_events.past.each do |event| %>
+    <p><%= link_to event.event_title, event %></p>
 <% end %>
 
 <h3>Future Events:</h3>
-<% @user.attended_events.each do |event| %>
-    <% if event.event_date >= Date.current %>
-        <p><%= link_to event.event_title, event %></p>
-    <% end %>
+<% @user.attended_events.upcoming.each do |event| %>
+    <div>
+        <%= link_to event.event_title, event %>
+        <% @enrollment = Enrollment.find_by(user_id: current_user.id, event_id: event.id) %>
+        <%= button_to "Not Attending", @enrollment, method: :delete, data: { turbo_confirm: "Are you sure?"} %>
+    </div>
 <% end %>
