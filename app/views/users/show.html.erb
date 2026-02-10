@@ -1,8 +1,9 @@
 <h1><%= @user.email %>'s Profile</h1>
 
+<h3>Events I've created:</h3>
 <% @user.events.each do |event| %>
     <div class="user_event">
-        <h3><%= link_to event.event_title, event %></h3>
+        <p><%= link_to event.event_title, event %></p>
     </div>
 <% end %>
 
@@ -15,7 +16,13 @@
 <% @user.attended_events.upcoming.each do |event| %>
     <div>
         <%= link_to event.event_title, event %>
+
         <% @enrollment = Enrollment.find_by(user_id: current_user.id, event_id: event.id) %>
-        <%= button_to "Not Attending", @enrollment, method: :delete, data: { turbo_confirm: "Are you sure?"} %>
+        <%= button_to "Remove Attendence", @enrollment, method: :delete, data: { turbo_confirm: "Are you sure?"} %>
     </div>
+<% end %>
+
+<h3>Events you're invited to:</h3>
+<% @user.invited_to.each do |event| %>
+    <%= link_to event.event_title, event %>
 <% end %>

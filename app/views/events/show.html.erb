@@ -4,9 +4,18 @@
 
 <p>Event created by: <%= link_to @event.creator.email, @event.creator %></p>
 
-<%= form_with url: enrollments_path do |form| %>
-    <%= form.hidden_field :event_id, value: @event.id %>
-    <%= form.submit "Attend Event"%>
+<% if current_user.invited_to.exists?(@event.id) %>
+    <%= form_with url: enrollments_path do |form| %>
+        <%= form.hidden_field :event_id, value: @event.id %>
+        <h4>You've been invited!</h4>
+        <%= form.submit "Accept invite"%>
+    <% end %>
+<% elsif current_user.id == @event.creator.id %>
+    <%= form_with url: invites_path do |form| %>
+        <%= form.hidden_field :event_id, value: @event.id %>
+        <%= form.collection_select :user_id, User.others_except(current_user), :id, :email %>
+        <%= form.submit "Invite User" %>
+    <% end %>
 <% end %>
 
 <h3>People Attending:</h3>
